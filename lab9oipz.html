@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIOСК / WEAR — Український бренд вуличного та базового одягу</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Типографіка Inter та JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        base: '#0B0B0B',
+                        surface: '#141414',
+                        elevated: '#1C1C1C',
+                        stroke: '#242424',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-base text-neutral-100 font-sans antialiased min-h-screen flex flex-col selection:bg-white selection:text-black">
+
+    <!-- Верхня інфо-стрічка (як у Staff) -->
+    <div class="bg-surface border-b border-stroke text-[11px] text-neutral-400">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-8 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <span>Відправка щодня по Україні (Нова Пошта)</span>
+                <span class="hidden sm:inline text-neutral-600">|</span>
+                <span class="hidden sm:inline">Обмін та повернення 14 днів</span>
+            </div>
+            <div class="font-mono text-neutral-300">
+                Безкоштовна доставка від 3 500 ₴
+            </div>
+        </div>
+    </div>
+
+    <!-- Головна навігація на всю ширину з випадаючими підменю -->
+    <header class="sticky top-0 z-40 bg-base/95 backdrop-blur-md border-b border-stroke">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+            
+            <!-- Логотип та мобільне бургер-меню -->
+            <div class="flex items-center gap-3">
+                <button type="button" id="mobileMenuBtn" class="lg:hidden p-2 -ml-2 text-neutral-300 hover:text-white cursor-pointer" aria-label="Меню">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="square" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <a href="#" id="logoResetBtn" class="flex items-center gap-2 text-white font-bold tracking-[0.18em] text-base sm:text-lg uppercase">
+                    <span class="w-2.5 h-2.5 bg-white inline-block"></span>
+                    <span>KIOSK WEAR</span>
+                </a>
+            </div>
+
+            <!-- Центральне горизонтальне меню з Dropdown підкатегоріями -->
+            <nav class="hidden lg:flex items-center h-full" aria-label="Головне меню">
+                <ul class="flex items-center h-full space-x-1">
+                    <li class="h-full flex items-center">
+                        <button type="button" data-cat="new" data-sub="all" class="nav-link px-3.5 h-full flex items-center text-xs font-medium uppercase tracking-wider text-neutral-300 hover:text-white transition-colors cursor-pointer">
+                            Новинки
+                        </button>
+                    </li>
+
+                    <!-- Dropdown: Верхній одяг -->
+                    <li class="relative group h-full flex items-center">
+                        <button type="button" data-cat="outerwear" data-sub="all" class="nav-link px-3.5 h-full flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-neutral-300 group-hover:text-white transition-colors cursor-pointer">
+                            <span>Верхній одяг</span>
+                            <svg class="w-3 h-3 text-neutral-500 group-hover:text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full w-52 bg-surface border border-stroke shadow-2xl py-2 z-50">
+                            <button type="button" data-cat="outerwear" data-sub="all" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-300 hover:bg-elevated hover:text-white cursor-pointer">Увесь верхній одяг</button>
+                            <button type="button" data-cat="outerwear" data-sub="parka" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Парки та вітровки</button>
+                            <button type="button" data-cat="outerwear" data-sub="bomber" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Бомбери</button>
+                            <button type="button" data-cat="outerwear" data-sub="jacket" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Утеплені куртки</button>
+                        </div>
+                    </li>
+
+                    <!-- Dropdown: Худі та світшоти -->
+                    <li class="relative group h-full flex items-center">
+                        <button type="button" data-cat="tops" data-sub="all" class="nav-link px-3.5 h-full flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-neutral-300 group-hover:text-white transition-colors cursor-pointer">
+                            <span>Худі та світшоти</span>
+                            <svg class="w-3 h-3 text-neutral-500 group-hover:text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full w-52 bg-surface border border-stroke shadow-2xl py-2 z-50">
+                            <button type="button" data-cat="tops" data-sub="all" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-300 hover:bg-elevated hover:text-white cursor-pointer">Усі худі та світшоти</button>
+                            <button type="button" data-cat="tops" data-sub="hoodie" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Худі оверсайз</button>
+                            <button type="button" data-cat="tops" data-sub="sweatshirt" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Світшоти базові</button>
+                            <button type="button" data-cat="tops" data-sub="zip" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Зіп-худі</button>
+                        </div>
+                    </li>
+
+                    <!-- Dropdown: Штани -->
+                    <li class="relative group h-full flex items-center">
+                        <button type="button" data-cat="bottoms" data-sub="all" class="nav-link px-3.5 h-full flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-neutral-300 group-hover:text-white transition-colors cursor-pointer">
+                            <span>Штани</span>
+                            <svg class="w-3 h-3 text-neutral-500 group-hover:text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full w-52 bg-surface border border-stroke shadow-2xl py-2 z-50">
+                            <button type="button" data-cat="bottoms" data-sub="all" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-300 hover:bg-elevated hover:text-white cursor-pointer">Усі штани</button>
+                            <button type="button" data-cat="bottoms" data-sub="cargo" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Карго</button>
+                            <button type="button" data-cat="bottoms" data-sub="joggers" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Джогери</button>
+                            <button type="button" data-cat="bottoms" data-sub="jeans" class="nav-link w-full text-left px-4 py-2 text-xs text-neutral-400 hover:bg-elevated hover:text-white cursor-pointer">Джинси</button>
+                        </div>
+                    </li>
+
+                    <li class="h-full flex items-center">
+                        <button type="button" data-cat="accessories" data-sub="all" class="nav-link px-3.5 h-full flex items-center text-xs font-medium uppercase tracking-wider text-neutral-300 hover:text-white transition-colors cursor-pointer">
+                            Аксесуари
+                        </button>
+                    </li>
+
+                    <li class="h-full flex items-center">
+                        <button type="button" data-cat="sale" data-sub="all" class="nav-link px-3.5 h-full flex items-center text-xs font-semibold uppercase tracking-wider text-red-400 hover:text-red-300 transition-colors cursor-pointer">
+                            Sale
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Права частина шапки: Пошук, Обране, Кошик -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Швидкий пошук по назві/артикулу -->
+                <div class="relative hidden md:block w-52 xl:w-64">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Пошук або Арт. ST-..." 
+                        class="w-full bg-surface border border-stroke focus:border-neutral-500 text-xs text-white placeholder-neutral-500 pl-3 pr-8 py-2 outline-none transition-colors"
+                    />
+                    <svg class="w-3.5 h-3.5 text-neutral-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="M20 20l-3.5-3.5"/>
+                    </svg>
+                </div>
+
+                <!-- Іконка обраного (Wishlist) -->
+                <button type="button" id="wishlistFilterBtn" title="Показати обране" class="relative p-2 bg-surface border border-stroke hover:border-neutral-500 text-neutral-300 hover:text-white transition-colors cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path d="M12 20.5s-7-4.5-9-9.2C1.4 7.6 4.1 4.5 7.5 4.5c1.9 0 3.6 1 4.5 2.4.9-1.4 2.6-2.4 4.5-2.4 3.4 0 6.1 3.1 4.5 6.8-2 4.7-9 9.2-9 9.2z"/>
+                    </svg>
+                    <span id="wishlistBadge" class="hidden absolute -top-1.5 -right-1.5 bg-neutral-700 text-white font-mono text-[10px] w-4 h-4 flex items-center justify-center">0</span>
+                </button>
+
+                <!-- Кнопка відкриття виїзного кошика -->
+                <button type="button" id="openCartBtn" class="flex items-center gap-2.5 bg-white text-black hover:bg-neutral-200 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M6 7h12l-1 13H7L6 7z"/>
+                        <path d="M9 7V5a3 3 0 016 0v2"/>
+                    </svg>
+                    <span class="hidden sm:inline">Кошик</span>
+                    <span id="cartCountBadge" class="bg-black text-white font-mono text-[11px] px-1.5 py-0.5 leading-none">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Мобільне меню (розгортається) -->
+        <div id="mobileNavPanel" class="hidden lg:hidden bg-surface border-t border-stroke px-4 py-4 space-y-3">
+            <input 
+                type="text" 
+                id="mobileSearchInput" 
+                placeholder="Пошук по назві або артикулу..." 
+                class="w-full bg-base border border-stroke text-xs text-white placeholder-neutral-500 px-3 py-2 outline-none"
+            />
+            <div class="grid grid-cols-2 gap-2 pt-1">
+                <button type="button" data-cat="all" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-neutral-200">Усі товари</button>
+                <button type="button" data-cat="new" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-neutral-200">Новинки</button>
+                <button type="button" data-cat="outerwear" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-neutral-200">Верхній одяг</button>
+                <button type="button" data-cat="tops" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-neutral-200">Худі та світшоти</button>
+                <button type="button" data-cat="bottoms" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-neutral-200">Штани</button>
+                <button type="button" data-cat="accessories" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-neutral-200">Аксесуари</button>
+                <button type="button" data-cat="sale" data-sub="all" class="nav-link text-left px-3 py-2 bg-base border border-stroke text-xs uppercase text-red-400">Sale</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Блок хлібних крихт, фільтрів за розміром, наявністю та сортуванням -->
+    <section class="border-b border-stroke bg-surface/60">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-4">
+            <!-- Верхній рядок: Хлібні крихти та лічильник -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-stroke/80 text-xs">
+                <div class="flex items-center gap-2 text-neutral-400">
+                    <button type="button" id="breadcrumbHome" class="hover:text-white cursor-pointer">Каталог</button>
+                    <span>/</span>
+                    <span id="activeCategoryTitle" class="text-white font-medium">Усі моделі</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="visibleProductsCount" class="font-mono text-neutral-400">Знайдено: 8</span>
+                    <button type="button" id="clearAllFiltersBtn" class="hidden text-neutral-400 hover:text-white underline underline-offset-4 cursor-pointer">
+                        Скинути фільтри
+                    </button>
+                </div>
+            </div>
+
+            <!-- Панель фільтрів (Розміри, Наявність, Сортування) -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                
+                <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+                    <!-- Фільтр за розмірами -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-neutral-400 mr-1">Розмір:</span>
+                        <div class="flex items-center gap-1" id="sizeFilterGroup">
+                            <button type="button" data-size="XS" class="size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer">XS</button>
+                            <button type="button" data-size="S" class="size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer">S</button>
+                            <button type="button" data-size="M" class="size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer">M</button>
+                            <button type="button" data-size="L" class="size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer">L</button>
+                            <button type="button" data-size="XL" class="size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer">XL</button>
+                        </div>
+                    </div>
+
+                    <!-- Чекбокс фільтра "Тільки в наявності" -->
+                    <label class="flex items-center gap-2.5 cursor-pointer select-none">
+                        <span class="relative flex items-center justify-center">
+                            <input type="checkbox" id="inStockOnlyCheckbox" class="peer sr-only">
+                            <span class="w-4 h-4 bg-base border border-neutral-600 peer-checked:bg-white peer-checked:border-white flex items-center justify-center transition-colors">
+                                <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" viewBox="0 0 12 12" fill="none">
+                                    <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" stroke-width="1.8"/>
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="text-xs text-neutral-300">Тільки в наявності</span>
+                    </label>
+                </div>
+
+                <!-- Сортування -->
+                <div class="flex items-center gap-2">
+                    <label for="sortSelect" class="text-xs text-neutral-400 shrink-0">Сортування:</label>
+                    <select id="sortSelect" class="bg-base border border-stroke focus:border-neutral-500 text-xs text-neutral-200 px-3 py-1.5 outline-none cursor-pointer">
+                        <option value="popular">За популярністю</option>
+                        <option value="price-asc">Від дешевших до дорожчих</option>
+                        <option value="price-desc">Від дорожчих до дешевших</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Основна сітка каталогу (3-4 картки в ряд) -->
+    <main class="flex-grow max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-8">
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <!-- Картки генеруються через JS -->
+        </div>
+
+        <!-- Повідомлення, якщо за фільтрами нічого не знайдено -->
+        <div id="emptyCatalogState" class="hidden py-20 text-center border border-stroke bg-surface mt-4">
+            <p class="text-sm text-neutral-300 mb-2">За вашим запитом товарів не знайдено</p>
+            <p class="text-xs text-neutral-500 mb-5">Спробуйте змінити параметри пошуку або скинути фільтри розміру</p>
+            <button type="button" id="resetEmptyBtn" class="bg-white text-black px-5 py-2.5 text-xs font-semibold uppercase tracking-wider hover:bg-neutral-200 transition-colors cursor-pointer">
+                Показати весь каталог
+            </button>
+        </div>
+    </main>
+
+    <!-- Нижня плаваюча панель швидкого переходу до кошика (показується, коли є товари) -->
+    <div id="floatingCartBar" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-30 bg-surface border border-neutral-600 shadow-2xl px-4 py-3 flex items-center gap-5 w-[92%] max-w-lg justify-between">
+        <div class="text-xs">
+            <span class="text-neutral-400">Обрано позицій:</span>
+            <span id="floatingCount" class="font-mono font-semibold text-white ml-1">0</span>
+            <span class="text-neutral-600 mx-2">|</span>
+            <span id="floatingTotal" class="font-mono font-semibold text-white">0 ₴</span>
+        </div>
+        <button type="button" id="floatingOpenCartBtn" class="bg-white text-black hover:bg-neutral-200 px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer">
+            Оформити
+        </button>
+    </div>
+
+    <!-- Футер у стилі українського бренду -->
+    <footer class="border-t border-stroke bg-surface mt-16">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
+            <div>
+                <div class="flex items-center gap-2 text-white font-bold tracking-[0.18em] text-sm uppercase mb-3">
+                    <span class="w-2 h-2 bg-white inline-block"></span>
+                    <span>KIOSK WEAR</span>
+                </div>
+                <p class="text-neutral-400 leading-relaxed">
+                    Локальний бренд технологічного та базового одягу. Власне виробництво в Україні з фокусом на зносостійкі матеріали.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold uppercase tracking-wider mb-3">Каталог</h4>
+                <ul class="space-y-2 text-neutral-400">
+                    <li><button type="button" data-cat="outerwear" data-sub="all" class="nav-link hover:text-white cursor-pointer">Верхній одяг</button></li>
+                    <li><button type="button" data-cat="tops" data-sub="all" class="nav-link hover:text-white cursor-pointer">Худі та світшоти</button></li>
+                    <li><button type="button" data-cat="bottoms" data-sub="all" class="nav-link hover:text-white cursor-pointer">Штани та карго</button></li>
+                    <li><button type="button" data-cat="accessories" data-sub="all" class="nav-link hover:text-white cursor-pointer">Аксесуари</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold uppercase tracking-wider mb-3">Клієнтам</h4>
+                <ul class="space-y-2 text-neutral-400">
+                    <li>Доставка Новою Поштою 1-2 дні</li>
+                    <li>Оплата при отриманні або карткою</li>
+                    <li>Гарантія обміну розміру 14 днів</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold uppercase tracking-wider mb-3">Контакти</h4>
+                <p class="font-mono text-neutral-300 mb-1">+38 (067) 402-19-88</p>
+                <p class="text-neutral-400">Щоденно з 10:00 до 20:00</p>
+            </div>
+        </div>
+        <div class="border-t border-stroke">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-2 text-[11px] text-neutral-500 font-mono">
+                <span>© 2026 KIOSK WEAR. Усі права захищено.</span>
+                <span>MADE IN UKRAINE</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ВИЇЗНИЙ КОШИК (DRAWER ПРАВОРУЧ) -->
+    <div id="cartDrawerBackdrop" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-xs transition-opacity">
+        <aside id="cartDrawerPanel" class="fixed top-0 right-0 h-full w-full max-w-md bg-surface border-l border-stroke flex flex-col shadow-2xl">
+            
+            <!-- Шапка кошика -->
+            <div class="px-5 py-4 border-b border-stroke flex items-center justify-between bg-base">
+                <div class="flex items-center gap-2.5">
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-white">Ваш кошик</h2>
+                    <span id="drawerCountLabel" class="font-mono text-xs bg-elevated border border-stroke px-2 py-0.5 text-neutral-300">0</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" id="clearCartBtn" class="hidden text-xs text-neutral-400 hover:text-red-400 underline underline-offset-4 transition-colors cursor-pointer">
+                        Очистити кошик
+                    </button>
+                    <button type="button" id="closeCartBtn" class="p-1.5 text-neutral-400 hover:text-white border border-transparent hover:border-stroke transition-colors cursor-pointer" aria-label="Закрити кошик">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M6 6l12 12M18 6L6 18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Вміст кошика (скролиться) -->
+            <div class="flex-1 overflow-y-auto px-5 py-4 space-y-6">
+                
+                <!-- Список обраних товарів -->
+                <div id="cartItemsList" class="space-y-3">
+                    <!-- Генерується JS -->
+                </div>
+
+                <!-- Блок додаткових опцій (Checkbox) та форми замовлення (видимий, коли кошик не порожній) -->
+                <div id="checkoutSection" class="hidden space-y-6 pt-4 border-t border-stroke">
+                    
+                    <!-- Додаткові опції у вигляді чекбоксів -->
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-3">
+                            Додаткові опції
+                        </p>
+                        <div class="space-y-2.5">
+                            <label class="flex items-center justify-between gap-3 p-2.5 bg-base border border-stroke hover:border-neutral-600 cursor-pointer select-none">
+                                <span class="flex items-center gap-2.5">
+                                    <span class="relative flex items-center justify-center">
+                                        <input type="checkbox" id="optGiftWrap" data-price="80" class="cart-option-checkbox peer sr-only">
+                                        <span class="w-4 h-4 bg-surface border border-neutral-600 peer-checked:bg-white peer-checked:border-white flex items-center justify-center transition-colors">
+                                            <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" viewBox="0 0 12 12" fill="none">
+                                                <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" stroke-width="1.8"/>
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="text-xs text-neutral-200">Подарункове пакування</span>
+                                </span>
+                                <span class="font-mono text-xs text-neutral-400">+80 ₴</span>
+                            </label>
+
+                            <label class="flex items-center justify-between gap-3 p-2.5 bg-base border border-stroke hover:border-neutral-600 cursor-pointer select-none">
+                                <span class="flex items-center gap-2.5">
+                                    <span class="relative flex items-center justify-center">
+                                        <input type="checkbox" id="optNoCall" data-price="0" class="cart-option-checkbox peer sr-only">
+                                        <span class="w-4 h-4 bg-surface border border-neutral-600 peer-checked:bg-white peer-checked:border-white flex items-center justify-center transition-colors">
+                                            <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" viewBox="0 0 12 12" fill="none">
+                                                <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" stroke-width="1.8"/>
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="text-xs text-neutral-200">Не телефонувати для підтвердження</span>
+                                </span>
+                                <span class="font-mono text-[11px] text-neutral-500">SMS</span>
+                            </label>
+
+                            <label class="flex items-center justify-between gap-3 p-2.5 bg-base border border-stroke hover:border-neutral-600 cursor-pointer select-none">
+                                <span class="flex items-center gap-2.5">
+                                    <span class="relative flex items-center justify-center">
+                                        <input type="checkbox" id="optCodPayment" data-price="0" checked class="cart-option-checkbox peer sr-only">
+                                        <span class="w-4 h-4 bg-surface border border-neutral-600 peer-checked:bg-white peer-checked:border-white flex items-center justify-center transition-colors">
+                                            <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" viewBox="0 0 12 12" fill="none">
+                                                <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" stroke-width="1.8"/>
+                                            </svg>
+                                        </span>
+                                    </span>
+                                    <span class="text-xs text-neutral-200">Оплата при отриманні (Нова Пошта)</span>
+                                </span>
+                                <span class="font-mono text-[11px] text-neutral-500">НП</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Форма даних отримувача -->
+                    <form id="orderCheckoutForm" novalidate class="space-y-3">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-neutral-300">
+                            Дані для доставки
+                        </p>
+                        <div>
+                            <input type="text" id="custName" required placeholder="Ім'я та прізвище *" class="w-full bg-base border border-stroke focus:border-neutral-400 text-xs text-white placeholder-neutral-500 px-3 py-2.5 outline-none">
+                        </div>
+                        <div>
+                            <input type="tel" id="custPhone" required placeholder="Телефон (+380...) *" class="w-full bg-base border border-stroke focus:border-neutral-400 text-xs text-white placeholder-neutral-500 px-3 py-2.5 outline-none font-mono">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <input type="text" id="custCity" required placeholder="Місто (напр. Львів) *" class="w-full bg-base border border-stroke focus:border-neutral-400 text-xs text-white placeholder-neutral-500 px-3 py-2.5 outline-none">
+                            <input type="text" id="custBranch" required placeholder="Відділення НП № *" class="w-full bg-base border border-stroke focus:border-neutral-400 text-xs text-white placeholder-neutral-500 px-3 py-2.5 outline-none">
+                        </div>
+                        <p id="checkoutErrorMsg" class="hidden text-xs text-red-400 font-mono"></p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Підвал кошика з підсумком та кнопкою підтвердження -->
+            <div id="cartDrawerFooter" class="hidden p-5 border-t border-stroke bg-base space-y-3">
+                <div class="space-y-1.5 text-xs">
+                    <div class="flex justify-between text-neutral-400">
+                        <span>Товари:</span>
+                        <span id="drawerSubtotal" class="font-mono text-neutral-200">0 ₴</span>
+                    </div>
+                    <div class="flex justify-between text-neutral-400">
+                        <span>Додаткові послуги:</span>
+                        <span id="drawerOptionsCost" class="font-mono text-neutral-200">0 ₴</span>
+                    </div>
+                    <div class="flex justify-between text-neutral-400">
+                        <span>Доставка Нова Пошта:</span>
+                        <span id="drawerShippingCost" class="font-mono text-neutral-200">90 ₴</span>
+                    </div>
+                    <div class="flex justify-between items-baseline pt-2.5 border-t border-stroke">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-white">Разом до сплати:</span>
+                        <span id="drawerGrandTotal" class="font-mono text-lg font-bold text-white">0 ₴</span>
+                    </div>
+                </div>
+
+                <button type="submit" form="orderCheckoutForm" class="w-full py-3.5 bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                    Підтвердити замовлення
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Модальне вікно успішного замовлення -->
+    <div id="orderSuccessModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-xs">
+        <div class="bg-surface border border-stroke max-w-md w-full p-6 sm:p-8">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-stroke">
+                <span class="font-mono text-xs uppercase text-neutral-400">Замовлення оформлено</span>
+                <span id="successOrderNumber" class="font-mono text-xs text-white font-semibold">#ST-0000</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Дякуємо за покупку!</h3>
+            <p id="successCustomerText" class="text-xs text-neutral-400 leading-relaxed mb-5">
+                Ваше замовлення передано на збірку.
+            </p>
+            <div id="successSummaryBox" class="bg-base border border-stroke p-4 mb-6 space-y-2 text-xs font-mono">
+                <!-- Деталі замовлення -->
+            </div>
+            <button type="button" id="closeSuccessModalBtn" class="w-full py-3 bg-white text-black hover:bg-neutral-200 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer">
+                Продовжити покупки
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // База товарів у стилі українського бренду вуличного одягу STAFF
+        const productsData = [
+            {
+                id: 'st-042',
+                sku: 'Арт. ST-042',
+                name: 'Парка подовжена Storm Black',
+                category: 'outerwear',
+                subCategory: 'parka',
+                isNew: true,
+                isSale: false,
+                inStock: true,
+                popularity: 98,
+                price: 3890,
+                oldPrice: null,
+                sizes: ['S', 'M', 'L', 'XL'],
+                selectedSize: 'L',
+                image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-118',
+                sku: 'Арт. ST-118',
+                name: 'Худі оверсайз Heavy Fleece 460g',
+                category: 'tops',
+                subCategory: 'hoodie',
+                isNew: true,
+                isSale: false,
+                inStock: true,
+                popularity: 100,
+                price: 1850,
+                oldPrice: null,
+                sizes: ['XS', 'S', 'M', 'L', 'XL'],
+                selectedSize: 'M',
+                image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-205',
+                sku: 'Арт. ST-205',
+                name: 'Штани карго Tactical Ripstop',
+                category: 'bottoms',
+                subCategory: 'cargo',
+                isNew: false,
+                isSale: false,
+                inStock: true,
+                popularity: 95,
+                price: 2190,
+                oldPrice: null,
+                sizes: ['S', 'M', 'L', 'XL'],
+                selectedSize: 'L',
+                image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-089',
+                sku: 'Арт. ST-089',
+                name: 'Бомбер утеплений MA-1 Core',
+                category: 'outerwear',
+                subCategory: 'bomber',
+                isNew: false,
+                isSale: true,
+                inStock: true,
+                popularity: 91,
+                price: 2790,
+                oldPrice: 3450,
+                sizes: ['S', 'M', 'L'],
+                selectedSize: 'M',
+                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-134',
+                sku: 'Арт. ST-134',
+                name: 'Зіп-худі базове Monochrome Zip',
+                category: 'tops',
+                subCategory: 'zip',
+                isNew: true,
+                isSale: false,
+                inStock: true,
+                popularity: 89,
+                price: 1990,
+                oldPrice: null,
+                sizes: ['XS', 'S', 'M', 'L', 'XL'],
+                selectedSize: 'L',
+                image: 'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-241',
+                sku: 'Арт. ST-241',
+                name: 'Джогери трикотажні Basic Black',
+                category: 'bottoms',
+                subCategory: 'joggers',
+                isNew: false,
+                isSale: true,
+                inStock: true,
+                popularity: 86,
+                price: 1490,
+                oldPrice: 1890,
+                sizes: ['XS', 'S', 'M', 'L'],
+                selectedSize: 'M',
+                image: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-312',
+                sku: 'Арт. ST-312',
+                name: 'Сумка через плече Cordura Messenger',
+                category: 'accessories',
+                subCategory: 'bag',
+                isNew: true,
+                isSale: false,
+                inStock: true,
+                popularity: 94,
+                price: 980,
+                oldPrice: null,
+                sizes: ['ONE SIZE'],
+                selectedSize: 'ONE SIZE',
+                image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                id: 'st-277',
+                sku: 'Арт. ST-277',
+                name: 'Джинси вільного крою Baggy Raw',
+                category: 'bottoms',
+                subCategory: 'jeans',
+                isNew: false,
+                isSale: false,
+                inStock: false,
+                popularity: 82,
+                price: 2350,
+                oldPrice: null,
+                sizes: ['S', 'M', 'L', 'XL'],
+                selectedSize: 'L',
+                image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80'
+            }
+        ];
+
+        // Стан додатку
+        // cart: { [productId]: { qty: number, size: string } }
+        const cart = {
+            'st-118': { qty: 1, size: 'M' }
+        };
+        const wishlist = new Set();
+
+        const filters = {
+            category: 'all',
+            subCategory: 'all',
+            size: null,
+            inStockOnly: false,
+            wishlistOnly: false,
+            search: '',
+            sort: 'popular'
+        };
+
+        const categoryTitles = {
+            all: 'Усі моделі',
+            new: 'Новинки сезону',
+            outerwear: 'Верхній одяг',
+            tops: 'Худі та світшоти',
+            bottoms: 'Штани',
+            accessories: 'Аксесуари',
+            sale: 'Розпродаж (Sale)'
+        };
+
+        const FREE_SHIPPING_MIN = 3500;
+        const NOVA_POSHTA_RATE = 90;
+
+        function formatPrice(val) {
+            return val.toLocaleString('uk-UA') + ' ₴';
+        }
+
+        // Отримання відфільтрованого та відсортованого списку товарів
+        function getFilteredProducts() {
+            let list = [...productsData];
+
+            if (filters.category === 'new') {
+                list = list.filter(p => p.isNew);
+            } else if (filters.category === 'sale') {
+                list = list.filter(p => p.isSale);
+            } else if (filters.category !== 'all') {
+                list = list.filter(p => p.category === filters.category);
+                if (filters.subCategory !== 'all') {
+                    list = list.filter(p => p.subCategory === filters.subCategory);
+                }
+            }
+
+            if (filters.size) {
+                list = list.filter(p => p.sizes.includes(filters.size));
+            }
+
+            if (filters.inStockOnly) {
+                list = list.filter(p => p.inStock);
+            }
+
+            if (filters.wishlistOnly) {
+                list = list.filter(p => wishlist.has(p.id));
+            }
+
+            if (filters.search.trim() !== '') {
+                const q = filters.search.trim().toLowerCase();
+                list = list.filter(p =>
+                    p.name.toLowerCase().includes(q) ||
+                    p.sku.toLowerCase().includes(q)
+                );
+            }
+
+            if (filters.sort === 'price-asc') {
+                list.sort((a, b) => a.price - b.price);
+            } else if (filters.sort === 'price-desc') {
+                list.sort((a, b) => b.price - a.price);
+            } else {
+                list.sort((a, b) => b.popularity - a.popularity);
+            }
+
+            return list;
+        }
+
+        // Рендер сітки товарів
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const emptyState = document.getElementById('emptyCatalogState');
+            const countEl = document.getElementById('visibleProductsCount');
+            const clearFiltersBtn = document.getElementById('clearAllFiltersBtn');
+
+            const filtered = getFilteredProducts();
+            countEl.textContent = `Знайдено: ${filtered.length}`;
+
+            const hasActiveFilters = filters.category !== 'all' || filters.size !== null ||
+                filters.inStockOnly || filters.wishlistOnly || filters.search !== '';
+            clearFiltersBtn.classList.toggle('hidden', !hasActiveFilters);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(product => {
+                const inCart = Boolean(cart[product.id]);
+                const activeSize = inCart ? cart[product.id].size : product.selectedSize;
+                const isWished = wishlist.has(product.id);
+
+                return `
+                    <article class="group bg-surface border transition-colors flex flex-col justify-between ${
+                        inCart ? 'border-white' : 'border-stroke hover:border-neutral-600'
+                    }">
+                        <div>
+                            <!-- Фото товару 3:4 -->
+                            <div class="relative aspect-[3/4] bg-elevated overflow-hidden border-b border-stroke">
+                                <img 
+                                    src="${product.image}" 
+                                    alt="${product.name}"
+                                    onerror="this.onerror=null;this.src='https://placehold.co/600x800/141414/525252?text=KIOSK+WEAR';"
+                                    class="w-full h-full object-cover object-center grayscale contrast-110 group-hover:scale-105 transition-transform duration-500 ${!product.inStock ? 'opacity-45' : ''}"
+                                />
+
+                                <!-- Бейджі зліва зверху -->
+                                <div class="absolute top-2.5 left-2.5 flex flex-col gap-1.5 pointer-events-none">
+                                    ${product.isNew ? '<span class="bg-white text-black font-mono text-[10px] font-bold uppercase px-2 py-0.5">NEW</span>' : ''}
+                                    ${product.isSale ? '<span class="bg-red-600 text-white font-mono text-[10px] font-bold uppercase px-2 py-0.5">SALE</span>' : ''}
+                                    ${!product.inStock ? '<span class="bg-neutral-800 text-neutral-300 border border-neutral-600 font-mono text-[10px] uppercase px-2 py-0.5">Немає в наявності</span>' : ''}
+                                </div>
+
+                                <!-- Кнопка в обране справа зверху -->
+                                <button type="button" data-id="${product.id}" class="wishlist-toggle-btn absolute top-2.5 right-2.5 w-8 h-8 bg-base/85 border border-stroke hover:border-white flex items-center justify-center text-neutral-300 hover:text-white transition-colors cursor-pointer" title="В обране">
+                                    <svg class="w-4 h-4 ${isWished ? 'fill-white text-white' : 'fill-none'}" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                        <path d="M12 20.5s-7-4.5-9-9.2C1.4 7.6 4.1 4.5 7.5 4.5c1.9 0 3.6 1 4.5 2.4.9-1.4 2.6-2.4 4.5-2.4 3.4 0 6.1 3.1 4.5 6.8-2 4.7-9 9.2-9 9.2z"/>
+                                    </svg>
+                                </button>
+
+                                <!-- Кастомний Checkbox "Обрати / В кошик" на картці -->
+                                ${product.inStock ? `
+                                    <label class="absolute bottom-2.5 left-2.5 right-2.5 bg-base/95 border ${inCart ? 'border-white' : 'border-neutral-700 hover:border-white'} px-3 py-2 flex items-center justify-between cursor-pointer select-none transition-colors">
+                                        <span class="flex items-center gap-2.5">
+                                            <input type="checkbox" data-id="${product.id}" class="product-cart-checkbox peer sr-only" ${inCart ? 'checked' : ''}>
+                                            <span class="w-4 h-4 border border-neutral-500 peer-checked:bg-white peer-checked:border-white flex items-center justify-center transition-colors">
+                                                <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" viewBox="0 0 12 12" fill="none">
+                                                    <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" stroke-width="2"/>
+                                                </svg>
+                                            </span>
+                                            <span class="text-xs font-medium ${inCart ? 'text-white' : 'text-neutral-300'}">
+                                                ${inCart ? 'У кошику' : 'Обрати / В кошик'}
+                                            </span>
+                                        </span>
+                                        <span class="font-mono text-[11px] text-neutral-400">
+                                            ${inCart ? `×${cart[product.id].qty}` : activeSize}
+                                        </span>
+                                    </label>
+                                ` : ''}
+                            </div>
+
+                            <!-- Текстова інформація картки -->
+                            <div class="p-4 pb-3">
+                                <div class="flex items-center justify-between text-[11px] font-mono text-neutral-500 mb-1">
+                                    <span>${product.sku}</span>
+                                    <span class="${product.inStock ? 'text-neutral-400' : 'text-neutral-600'}">
+                                        ${product.inStock ? 'В наявності' : 'Очікується'}
+                                    </span>
+                                </div>
+                                <h3 class="text-sm font-medium text-white leading-snug mb-2 line-clamp-1" title="${product.name}">
+                                    ${product.name}
+                                </h3>
+                                <div class="flex items-baseline gap-2">
+                                    <span class="font-mono text-sm font-semibold text-white">
+                                        ${formatPrice(product.price)}
+                                    </span>
+                                    ${product.oldPrice ? `<span class="font-mono text-xs text-neutral-500 line-through">${formatPrice(product.oldPrice)}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Нижній блок: вибір розміру та швидка дія -->
+                        <div class="px-4 pb-4 pt-2 flex items-center justify-between gap-2">
+                            <div class="flex flex-wrap items-center gap-1">
+                                ${product.sizes.map(sz => `
+                                    <button type="button" 
+                                        data-id="${product.id}" 
+                                        data-size="${sz}"
+                                        ${!product.inStock ? 'disabled' : ''}
+                                        class="card-size-btn font-mono text-[11px] px-2 py-1 border transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
+                                            activeSize === sz
+                                                ? 'bg-white text-black border-white font-semibold'
+                                                : 'bg-base text-neutral-400 border-stroke hover:border-neutral-500 hover:text-white'
+                                        }">
+                                        ${sz}
+                                    </button>
+                                `).join('')}
+                            </div>
+
+                            ${product.inStock ? `
+                                <button type="button" data-id="${product.id}" class="quick-open-cart-btn text-[11px] font-mono uppercase tracking-wider px-2.5 py-1.5 border border-stroke hover:border-white text-neutral-300 hover:text-white transition-colors cursor-pointer">
+                                    ${inCart ? 'До кошика →' : '+ Купити'}
+                                </button>
+                            ` : ''}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Синхронізація та рендер виїзного кошика (Drawer)
+        function renderCart() {
+            const listContainer = document.getElementById('cartItemsList');
+            const checkoutSection = document.getElementById('checkoutSection');
+            const footer = document.getElementById('cartDrawerFooter');
+            const clearBtn = document.getElementById('clearCartBtn');
+            const badge = document.getElementById('cartCountBadge');
+            const drawerLabel = document.getElementById('drawerCountLabel');
+            const floatingBar = document.getElementById('floatingCartBar');
+
+            const cartEntries = Object.entries(cart);
+            let totalUnits = 0;
+            let subtotal = 0;
+
+            if (cartEntries.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="py-14 px-4 text-center border border-dashed border-stroke bg-base">
+                        <p class="text-sm text-neutral-300 mb-1.5">Ваш кошик порожній</p>
+                        <p class="text-xs text-neutral-500">Позначте чекбокс «Обрати / В кошик» на потрібних моделях у каталозі</p>
+                    </div>
+                `;
+                checkoutSection.classList.add('hidden');
+                footer.classList.add('hidden');
+                clearBtn.classList.add('hidden');
+                badge.textContent = '0';
+                drawerLabel.textContent = '0';
+                floatingBar.classList.add('hidden');
+                return;
+            }
+
+            listContainer.innerHTML = cartEntries.map(([id, entry]) => {
+                const product = productsData.find(p => p.id === id);
+                if (!product) return '';
+
+                const itemTotal = product.price * entry.qty;
+                totalUnits += entry.qty;
+                subtotal += itemTotal;
+
+                return `
+                    <div class="flex gap-3 p-3 bg-base border border-stroke">
+                        <img 
+                            src="${product.image}" 
+                            alt="${product.name}"
+                            onerror="this.onerror=null;this.src='https://placehold.co/120x160/141414/525252?text=WEAR';"
+                            class="w-16 h-20 object-cover grayscale border border-stroke shrink-0"
+                        />
+                        <div class="flex-1 min-w-0 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-start justify-between gap-2">
+                                    <h4 class="text-xs font-medium text-white leading-snug line-clamp-2">${product.name}</h4>
+                                    <!-- Кнопка видалення товару з кошика (синхронно знімає чекбокс) -->
+                                    <button type="button" data-id="${id}" class="remove-cart-item-btn text-neutral-500 hover:text-red-400 p-1 -mt-1 -mr-1 transition-colors cursor-pointer" title="Видалити з кошика">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                            <path d="M3 6h18M8 6V4h8v2m-9 0l1 14h8l1-14"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <p class="font-mono text-[11px] text-neutral-400 mt-1">
+                                    ${product.sku} · Розмір: <span class="text-white">${entry.size}</span>
+                                </p>
+                            </div>
+
+                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-stroke/60">
+                                <!-- Перемикач кількості (- 1 +) -->
+                                <div class="flex items-center border border-stroke bg-surface">
+                                    <button type="button" data-id="${id}" data-delta="-1" class="cart-qty-btn w-6 h-6 font-mono text-xs text-neutral-400 hover:text-white hover:bg-elevated transition-colors cursor-pointer">-</button>
+                                    <span class="w-7 text-center font-mono text-xs text-white">${entry.qty}</span>
+                                    <button type="button" data-id="${id}" data-delta="1" class="cart-qty-btn w-6 h-6 font-mono text-xs text-neutral-400 hover:text-white hover:bg-elevated transition-colors cursor-pointer">+</button>
+                                </div>
+                                <span class="font-mono text-xs font-semibold text-white">${formatPrice(itemTotal)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Розрахунок додаткових чекбоксів у кошику
+            let optionsTotal = 0;
+            document.querySelectorAll('.cart-option-checkbox:checked').forEach(cb => {
+                optionsTotal += Number(cb.dataset.price) || 0;
+            });
+
+            const shippingCost = subtotal >= FREE_SHIPPING_MIN ? 0 : NOVA_POSHTA_RATE;
+            const grandTotal = subtotal + optionsTotal + shippingTotalSafe(shippingCost);
+
+            document.getElementById('drawerSubtotal').textContent = formatPrice(subtotal);
+            document.getElementById('drawerOptionsCost').textContent = formatPrice(optionsTotal);
+            document.getElementById('drawerShippingCost').textContent = shippingCost === 0 ? 'Безкоштовно' : formatPrice(shippingCost);
+            document.getElementById('drawerGrandTotal').textContent = formatPrice(grandTotal);
+
+            checkoutSection.classList.remove('hidden');
+            footer.classList.remove('hidden');
+            clearBtn.classList.remove('hidden');
+
+            badge.textContent = totalUnits;
+            drawerLabel.textContent = totalUnits;
+
+            // Плаваюча нижня панель швидкого оформлення
+            document.getElementById('floatingCount').textContent = totalUnits;
+            document.getElementById('floatingTotal').textContent = formatPrice(grandTotal);
+            floatingBar.classList.remove('hidden');
+        }
+
+        function shippingTotalSafe(val) {
+            return Number.isFinite(val) ? val : 0;
+        }
+
+        // Відкриття та закриття виїзного кошика
+        function openCartDrawer() {
+            const backdrop = document.getElementById('cartDrawerBackdrop');
+            backdrop.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartDrawer() {
+            const backdrop = document.getElementById('cartDrawerBackdrop');
+            backdrop.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Події відкриття/закриття кошика
+        document.getElementById('openCartBtn').addEventListener('click', openCartDrawer);
+        document.getElementById('floatingOpenCartBtn').addEventListener('click', openCartDrawer);
+        document.getElementById('closeCartBtn').addEventListener('click', closeCartDrawer);
+        document.getElementById('cartDrawerBackdrop').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('cartDrawerBackdrop')) {
+                closeCartDrawer();
+            }
+        });
+
+        // Події на картках товарів (чекбокс, розмір, швидка покупка, обране)
+        document.getElementById('productsGrid').addEventListener('change', (e) => {
+            if (e.target.classList.contains('product-cart-checkbox')) {
+                const id = e.target.dataset.id;
+                const product = productsData.find(p => p.id === id);
+                if (!product) return;
+
+                if (e.target.checked) {
+                    cart[id] = { qty: 1, size: product.selectedSize };
+                } else {
+                    delete cart[id];
+                }
+                renderProducts();
+                renderCart();
+            }
+        });
+
+        document.getElementById('productsGrid').addEventListener('click', (e) => {
+            // Вибір розміру на картці
+            const sizeBtn = e.target.closest('.card-size-btn');
+            if (sizeBtn) {
+                const id = sizeBtn.dataset.id;
+                const newSize = sizeBtn.dataset.size;
+                const product = productsData.find(p => p.id === id);
+                if (product) product.selectedSize = newSize;
+
+                if (cart[id]) {
+                    cart[id].size = newSize;
+                }
+                renderProducts();
+                renderCart();
+                return;
+            }
+
+            // Кнопка "+ Купити" / "До кошика →"
+            const quickBtn = e.target.closest('.quick-open-cart-btn');
+            if (quickBtn) {
+                const id = quickBtn.dataset.id;
+                const product = productsData.find(p => p.id === id);
+                if (product && !cart[id]) {
+                    cart[id] = { qty: 1, size: product.selectedSize };
+                    renderProducts();
+                    renderCart();
+                }
+                openCartDrawer();
+                return;
+            }
+
+            // Кнопка "В обране" (сердечко)
+            const wishBtn = e.target.closest('.wishlist-toggle-btn');
+            if (wishBtn) {
+                const id = wishBtn.dataset.id;
+                if (wishlist.has(id)) {
+                    wishlist.delete(id);
+                } else {
+                    wishlist.add(id);
+                }
+                const wishBadge = document.getElementById('wishlistBadge');
+                wishBadge.textContent = wishlist.size;
+                wishBadge.classList.toggle('hidden', wishlist.size === 0);
+                renderProducts();
+            }
+        });
+
+        // Події всередині кошика: зміна кількості, видалення позиції, очищення
+        document.getElementById('cartItemsList').addEventListener('click', (e) => {
+            const removeBtn = e.target.closest('.remove-cart-item-btn');
+            if (removeBtn) {
+                const id = removeBtn.dataset.id;
+                delete cart[id];
+                renderProducts(); // Синхронно знімає чекбокс на картці
+                renderCart();
+                return;
+            }
+
+            const qtyBtn = e.target.closest('.cart-qty-btn');
+            if (qtyBtn) {
+                const id = qtyBtn.dataset.id;
+                const delta = Number(qtyBtn.dataset.delta);
+                if (!cart[id]) return;
+
+                const nextQty = cart[id].qty + delta;
+                if (nextQty <= 0) {
+                    delete cart[id];
+                } else {
+                    cart[id].qty = nextQty;
+                }
+                renderProducts();
+                renderCart();
+            }
+        });
+
+        // Очистити весь кошик
+        document.getElementById('clearCartBtn').addEventListener('click', () => {
+            Object.keys(cart).forEach(key => delete cart[key]);
+            renderProducts();
+            renderCart();
+        });
+
+        // Перерахунок при зміні чекбоксів опцій у кошику
+        document.querySelectorAll('.cart-option-checkbox').forEach(cb => {
+            cb.addEventListener('change', renderCart);
+        });
+
+        // Навігація по категоріях та випадаючих підменю
+        document.querySelectorAll('.nav-link').forEach(btn => {
+            btn.addEventListener('click', () => {
+                filters.category = btn.dataset.cat || 'all';
+                filters.subCategory = btn.dataset.sub || 'all';
+                filters.wishlistOnly = false;
+
+                document.getElementById('activeCategoryTitle').textContent =
+                    categoryTitles[filters.category] || 'Каталог';
+
+                document.getElementById('mobileNavPanel').classList.add('hidden');
+                renderProducts();
+            });
+        });
+
+        // Скидання до всіх товарів по кліку на лого або хлібні крихти
+        function resetAllFilters() {
+            filters.category = 'all';
+            filters.subCategory = 'all';
+            filters.size = null;
+            filters.inStockOnly = false;
+            filters.wishlistOnly = false;
+            filters.search = '';
+            filters.sort = 'popular';
+
+            document.getElementById('searchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            document.getElementById('inStockOnlyCheckbox').checked = false;
+            document.getElementById('sortSelect').value = 'popular';
+            document.getElementById('activeCategoryTitle').textContent = categoryTitles.all;
+
+            document.querySelectorAll('.size-filter-btn').forEach(b => {
+                b.className = 'size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer';
+            });
+
+            renderProducts();
+        }
+
+        document.getElementById('logoResetBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            resetAllFilters();
+        });
+        document.getElementById('breadcrumbHome').addEventListener('click', resetAllFilters);
+        document.getElementById('clearAllFiltersBtn').addEventListener('click', resetAllFilters);
+        document.getElementById('resetEmptyBtn').addEventListener('click', resetAllFilters);
+
+        // Фільтр за розмірами
+        document.getElementById('sizeFilterGroup').addEventListener('click', (e) => {
+            const btn = e.target.closest('.size-filter-btn');
+            if (!btn) return;
+
+            const chosenSize = btn.dataset.size;
+            filters.size = filters.size === chosenSize ? null : chosenSize;
+
+            document.querySelectorAll('.size-filter-btn').forEach(b => {
+                const isActive = b.dataset.size === filters.size;
+                b.className = isActive
+                    ? 'size-filter-btn font-mono text-xs px-2.5 py-1 bg-white text-black border border-white font-semibold transition-colors cursor-pointer'
+                    : 'size-filter-btn font-mono text-xs px-2.5 py-1 bg-base border border-stroke text-neutral-400 hover:border-neutral-500 hover:text-white transition-colors cursor-pointer';
+            });
+
+            renderProducts();
+        });
+
+        // Фільтр "Тільки в наявності" та Сортування
+        document.getElementById('inStockOnlyCheckbox').addEventListener('change', (e) => {
+            filters.inStockOnly = e.target.checked;
+            renderProducts();
+        });
+
+        document.getElementById('sortSelect').addEventListener('change', (e) => {
+            filters.sort = e.target.value;
+            renderProducts();
+        });
+
+        // Фільтр обраного з шапки
+        document.getElementById('wishlistFilterBtn').addEventListener('click', () => {
+            filters.wishlistOnly = !filters.wishlistOnly;
+            document.getElementById('activeCategoryTitle').textContent = filters.wishlistOnly
+                ? 'Обрані моделі'
+                : (categoryTitles[filters.category] || 'Усі моделі');
+            renderProducts();
+        });
+
+        // Пошук (десктоп + мобільний)
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filters.search = e.target.value;
+            document.getElementById('mobileSearchInput').value = e.target.value;
+            renderProducts();
+        });
+        document.getElementById('mobileSearchInput').addEventListener('input', (e) => {
+            filters.search = e.target.value;
+            document.getElementById('searchInput').value = e.target.value;
+            renderProducts();
+        });
+
+        // Мобільне меню
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileNavPanel').classList.toggle('hidden');
+        });
+
+        // Підтвердження та валідація замовлення
+        document.getElementById('orderCheckoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const errorEl = document.getElementById('checkoutErrorMsg');
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const city = document.getElementById('custCity').value.trim();
+            const branch = document.getElementById('custBranch').value.trim();
+
+            if (!name || !phone || !city || !branch) {
+                errorEl.textContent = 'Будь ласка, заповніть усі обов’язкові поля доставки (*).';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            errorEl.classList.add('hidden');
+
+            const orderNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('successOrderNumber').textContent = `#ST-${orderNum}`;
+            document.getElementById('successCustomerText').textContent =
+                `${name}, ваше замовлення прийнято. Відправка: м. ${city}, Нова Пошта №${branch}.`;
+
+            const entries = Object.entries(cart);
+            const itemsHtml = entries.map(([id, entry]) => {
+                const p = productsData.find(item => item.id === id);
+                return `<div class="flex justify-between text-neutral-300">
+                    <span class="truncate pr-2">${p.name} [${entry.size}] ×${entry.qty}</span>
+                    <span class="shrink-0">${formatPrice(p.price * entry.qty)}</span>
+                </div>`;
+            }).join('');
+
+            const finalTotal = document.getElementById('drawerGrandTotal').textContent;
+            document.getElementById('successSummaryBox').innerHTML = `
+                ${itemsHtml}
+                <div class="pt-2 mt-2 border-t border-stroke flex justify-between text-white font-semibold">
+                    <span>До сплати:</span>
+                    <span>${finalTotal}</span>
+                </div>
+            `;
+
+            // Очищаємо кошик після успішного оформлення
+            Object.keys(cart).forEach(k => delete cart[k]);
+            renderProducts();
+            renderCart();
+            closeCartDrawer();
+
+            const modal = document.getElementById('orderSuccessModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+
+        document.getElementById('closeSuccessModalBtn').addEventListener('click', () => {
+            const modal = document.getElementById('orderSuccessModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+
+        // Ініціалізація
+        renderProducts();
+        renderCart();
+    </script>
+</body>
+</html>
